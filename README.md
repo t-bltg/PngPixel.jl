@@ -1,4 +1,4 @@
-Trying to debug the following [issue](https://discourse.julialang.org/t/reading-png-rgb-channels-julia-vs-python/73599).
+Trying to debug the following [issue](https://discourse.julialang.org/t/reading-png-rgb-channels-julia-vs-python/73599) reported in [PNGFiles](https://github.com/JuliaIO/PNGFiles.jl/issues/48).
 
 pngpixel.c taken from [libpng](https://github.com/glennrp/libpng/blob/libpng16/contrib/examples/pngpixel.c).
 

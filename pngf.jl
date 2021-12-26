@@ -18,12 +18,18 @@ end
 
 main() = begin
   x, y = parse(Int, ARGS[1]) + 1, parse(Int, ARGS[2]) + 1
+  gamma = nothing
+  try
+    gamma = parse(Float64, ARGS[4])
+  catch
+  end
   img = open(ARGS[3]) do io
-    PNGFiles.load(io)
+    PNGFiles.load(io; gamma=gamma)
   end
 
-  lin255(x) = round.(Int, 255linear(x))
   raw255(x) = round.(Int, 255x)
+  lin255 = (gamma === nothing || gamma > 0) ? (x -> round.(Int, 255linear(x))) : raw255
+
   r, g, b, a = red.(img), green.(img), blue.(img), alpha.(img)
 
   R, G, B = lin255.((r, g, b))
