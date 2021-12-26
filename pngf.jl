@@ -1,6 +1,8 @@
 using ColorTypes
 using PNGFiles
 
+@show pathof(PNGFiles)
+
 linear(srgb) = begin
   # en.wikipedia.org/wiki/SRGB#Transformation
   lin = similar(srgb)
