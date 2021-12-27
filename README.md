@@ -21,7 +21,17 @@ julia + PNGFiles
 ----------------
 ```bash
 $ julia pngf.jl 2 2 img.png
-rgba(233,171,5,244)  # <== wrong !
+# rgba(233,171,5,244)  # <== wrong when using en.wikipedia.org/wiki/SRGB#Transformation
+rgba(245,214,39,244) (γ corrected)
+rgba(233,173,4,244)
+```
+
+julia + ImageMagick
+-------------------
+```bash
+$ julia imgm.jl 2 2 img.png
+rgba(245,215,34,244) (γ corrected)
+rgba(233,175,3,244)  # <== wrong !
 ```
 
 python
