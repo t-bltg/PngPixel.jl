@@ -3,18 +3,15 @@ using PNGFiles
 
 @show pathof(PNGFiles)
 
-linear(srgb) = begin
-  # en.wikipedia.org/wiki/SRGB#Transformation
-  lin = similar(srgb)
-  for I ∈ eachindex(srgb)
-    lin[I] = if (v=srgb[I]) > .04045
-      ((v + .055) / 1.055)^2.4
-    else
-      v / 12.92
-    end
+linear(x) = (
+  if x > .0404482362771076
+    ((x + .055) / 1.055)^2.4
+  else
+    x / 12.92
   end
-  lin
-end
+)
+
+revert_gamma(x, gamma=.455) = x^(1 / gamma)
 
 main() = begin
   x, y = parse(Int, ARGS[1]) + 1, parse(Int, ARGS[2]) + 1
@@ -27,8 +24,10 @@ main() = begin
     PNGFiles.load(io; gamma=gamma)
   end
 
-  raw255(x) = round.(Int, 255x)
-  lin255 = (gamma === nothing || gamma > 0) ? (x -> round.(Int, 255linear(x))) : raw255
+  raw255(x) = floor.(Int, 255x)
+  linear255(x) = floor.(Int, 255revert_gamma.(x))
+
+  lin255 = (gamma === nothing || 0 < gamma < 1) ? linear255 : raw255
 
   r, g, b, a = red.(img), green.(img), blue.(img), alpha.(img)
 
